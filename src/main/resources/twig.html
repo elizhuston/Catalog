@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head> Album Catalog
+</head>
+<body>
+
+{% for a in albums %}
+<div>
+    <ul>
+        <li>Artist: {{a.artist}}</li>
+        <li>Title: {{a.title}}</li>
+    </ul>
+</div>
+{% endfor %}
+
+
+<script>
+      console.log("I am here");
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/data');
+xhr.onload = function(evt) {
+      console.log("I am inside");
+   if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        for (var i=0;i < response.length;i++){
+          console.log(response[i].artist);
+          var x = document.createElement("div");
+          x.innerHTML="Artist: " +   response[i].artist + " Title: " + response[i].title;
+          document.body.appendChild(x);
+        }
+        console.log(response);
+    } else {
+        alert('Request failed.  Returned status of ' + xhr.status);
+    }
+};
+xhr.send();
+</script>
+
+</body>
+</html>

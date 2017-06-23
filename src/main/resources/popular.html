@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Popular Fritters</title>
+  <!-- <link rel="stylesheet" type="text/css" href="/styles.css"> -->
+</head>
+<body>
+
+<div><h1> Fritter <h1> </div>
+
+{% if not username == null %}
+
+    <li>{{username}}, these are popular Fritters </li>
+
+{% endif %}
+
+<a href="/"><button>Return</button></a>
+
+<div class=outer>
+<div class=timeline id="timeline">
+
+</div>
+</div>
+
+<script>
+function getPopular() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/api/popular');
+  xhr.onload = function(evt) {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      var timelineDiv = document.getElementById('timeline');
+      timelineDiv.innerHTML = '';
+      for (var i in response) {
+        var tweet = response[i];
+        var div = document.createElement('div');
+        div.setAttribute('class', 'Sizzling');
+        var ul = document.createElement('ul');
+        var username = document.createElement('li');
+        var content = document.createElement('li');
+        var tweetDt = document.createElement('li');
+        username.innerHTML = tweet.username;
+        content.innerHTML = tweet.content;
+        tweetDt.innerHTML = tweet.tweetDt;
+        ul.appendChild(username);
+        ul.appendChild(content);
+        ul.appendChild(tweetDt);
+        div.appendChild(ul);
+        timelineDiv.appendChild(div);
+      }
+    }
+  }
+  xhr.send();
+}
+  getPopular();
+
+};/script>
+</body>
+</html>
